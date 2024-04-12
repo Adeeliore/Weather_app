@@ -1,0 +1,21 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, gray, mistyrose);
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  width: 90vh;
+  border-radius: 10000px;
+  font-family: "Arial", sans-serif;
+}
+
+/*# sourceMappingURL=index.css.map */
