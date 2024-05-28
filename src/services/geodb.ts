@@ -1,11 +1,21 @@
 import axios from 'axios';
+import { setupCache } from 'axios-cache-adapter';
 
-const API_HOST = 'https://wft-geo-db.p.rapidapi.com';
-const API_KEY = 'cd36335156msh16b1c128dcf4704p138177jsn6c7b4fa6a9fb';
+const cache = setupCache({
+    maxAge: 15 * 60 * 1000 // Кешируем запросы на 15 минут
+});
+
+
+const api = axios.create({
+    adapter: cache.adapter
+});
+
+const GEO_API_HOST = 'https://wft-geo-db.p.rapidapi.com';
+const GEO_API_KEY = 'cd36335156msh16b1c128dcf4704p138177jsn6c7b4fa6a9fb';
 
 export const getCities = async (cityName: string) => {
     try {
-        const response = await axios.get(`${API_HOST}/v1/geo/cities`, {
+        const response = await api.get(`${GEO_API_HOST}/v1/geo/cities`, {
             params: {
                 namePrefix: cityName,
                 types: 'CITY',
@@ -13,7 +23,7 @@ export const getCities = async (cityName: string) => {
                 sort: '-population'
             },
             headers: {
-                'X-RapidAPI-Key': API_KEY,
+                'X-RapidAPI-Key': GEO_API_KEY,
                 'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
             }
         });
@@ -22,3 +32,4 @@ export const getCities = async (cityName: string) => {
         console.error(error);
     }
 };
+
